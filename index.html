@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>KPI Congress 27 – Morning Registration Form</title>
+
+    <!-- Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="page">
+      <div class="card-modern">
+        <div>
+          <!-- Header -->
+          <div class="header text-center">
+            <div class="brand-badge mb-3">
+              <img
+                src="https://kpi.ac.th/wp-content/uploads/2025/09/LOGO_KPI-Congress-27-scaled.webp"
+                alt="KPI Logo"
+              /><br />
+            </div>
+            <div class="header-text">
+              <h1 class="title">
+                "KPI Congress 27th" <br />การประชุมวิชาการสถาบันพระปกเกล้า
+                <br />ครั้งที่ 27 ประจำปี 2568
+              </h1>
+              <h3>
+                (Environmental Democracy and Diplomacy :<br />
+                A Platform for Thailand in the Transformative World)
+              </h3>
+              <h4>
+                Friday, 7 November 2025, <br />
+                Morning Session at Parliament
+              </h4>
+              <h5>วันศุกร์ที่ 7 พฤศจิกายน 2568 <br />ภาคเช้า ณ อาคารรัฐสภา</h5>
+              <p class="lead">
+                Please complete the form below to receive your QR Code. <br />
+                กรอกข้อมูลด้านล่างเพื่อรับ QR Code ยืนยันการเข้าร่วมงาน
+              </p>
+            </div>
+          </div>
+
+          <form id="registerForm" class="mt-3">
+            <!-- Select Organization Type -->
+            <fieldset>
+              <legend class="h5">Organization Type (ประเภทหน่วยงาน)</legend>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <input
+                    type="radio"
+                    id="orgThai"
+                    name="orgType"
+                    value="Thai"
+                    class="form-check-input"
+                    required
+                  />
+                  <label for="orgThai" class="form-check-label">
+                    Thai Organization <br />(หน่วยงานไทย)</label
+                  >
+                </div>
+                <div class="col-md-6">
+                  <input
+                    type="radio"
+                    id="orgInt"
+                    name="orgType"
+                    value="International"
+                    class="form-check-input"
+                  />
+                  <label for="orgInt" class="form-check-label">
+                    International Organization <br />(หน่วยงานต่างประเทศ)</label
+                  >
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="mt-4">
+              <legend class="h5">
+                Participant Information (ข้อมูลผู้เข้าร่วม)
+              </legend>
+              <div class="row g-3">
+                <!-- Prefix -->
+                <div class="col-md-4">
+                  <label for="prefix" class="form-label">
+                    Prefix <span class="text-muted">(คำนำหน้า)</span>
+                  </label>
+                  <select
+                    id="prefix"
+                    name="prefix"
+                    class="form-control"
+                    required
+                  >
+                    <option value="">-- Select / เลือก --</option>
+                    <option value="Mr.">Mr. (นาย)</option>
+                    <option value="Mrs.">Mrs. (นาง)</option>
+                    <option value="Ms.">Ms. (นางสาว)</option>
+                    <option value="Other">Other (อื่นๆ)</option>
+                  </select>
+                </div>
+
+                <!-- Custom Prefix -->
+                <div class="col-md-4 d-none" id="customPrefixBox">
+                  <label for="customPrefix" class="form-label">
+                    Custom Prefix <span class="text-muted">(กรอกคำนำหน้า)</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="customPrefix"
+                    name="customPrefix"
+                    class="form-control"
+                  />
+                </div>
+
+                <!-- First Name -->
+                <div class="col-md-4">
+                  <label for="firstname" class="form-label">
+                    First Name <span class="text-muted">(ชื่อ)</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="firstname"
+                    name="firstname"
+                    class="form-control"
+                    required
+                  />
+                </div>
+
+                <!-- Last Name -->
+                <div class="col-md-4">
+                  <label for="lastname" class="form-label">
+                    Last Name <span class="text-muted">(นามสกุล)</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="lastname"
+                    name="lastname"
+                    class="form-control"
+                    required
+                  />
+                </div>
+
+                <!-- Email -->
+                <div class="col-md-6">
+                  <label for="email" class="form-label">
+                    Email <span class="text-muted">(อีเมล)</span>
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    class="form-control"
+                    required
+                  />
+                </div>
+
+                <!-- Phone -->
+                <div class="col-md-6">
+                  <label for="phone" class="form-label">
+                    Telephone <span class="text-muted">(เบอร์โทรศัพท์)</span>
+                  </label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    class="form-control"
+                    pattern="[0-9]{9,10}"
+                    title="กรอกหมายเลขโทรศัพท์ 9–10 หลัก"
+                    required
+                  />
+                </div>
+
+                <!-- Position -->
+                <div class="col-12">
+                  <label for="position" class="form-label">
+                    Position <span class="text-muted">(ตำแหน่งงาน)</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="position"
+                    name="position"
+                    class="form-control"
+                    required
+                  />
+                </div>
+
+                <!-- Organization -->
+                <div class="col-12">
+                  <label for="organization" class="form-label">
+                    Organization / Company
+                    <span class="text-muted">(หน่วยงาน / บริษัท)</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="organization"
+                    name="organization"
+                    class="form-control"
+                    required
+                  />
+                </div>
+
+                <!-- Coordinator -->
+                <div class="col-md-4">
+                  <label for="coordName" class="form-label">
+                    Coordinator Name
+                    <span class="text-muted">(ชื่อผู้ประสานงาน)</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="coordName"
+                    name="coordName"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <div class="col-md-4">
+                  <label for="coordPhone" class="form-label">
+                    Coordinator Phone
+                    <span class="text-muted">(เบอร์โทรผู้ประสานงาน)</span>
+                  </label>
+                  <input
+                    type="tel"
+                    id="coordPhone"
+                    name="coordPhone"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <div class="col-md-4">
+                  <label for="coordEmail" class="form-label">
+                    Coordinator Email
+                    <span class="text-muted">(อีเมลผู้ประสานงาน)</span>
+                  </label>
+                  <input
+                    type="email"
+                    id="coordEmail"
+                    name="coordEmail"
+                    class="form-control"
+                    required
+                  />
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="mt-4">
+              <legend class="h5">
+                Additional Information (ข้อมูลเพิ่มเติม)
+              </legend>
+              <div class="row g-3">
+                <!-- Bring Car -->
+                <div class="col-md-6">
+                  <label class="form-label">
+                    Parking Reservation
+                    <span class="text-muted">(สำรองที่จอดรถ)</span>
+                  </label>
+                  <select
+                    id="bringCar"
+                    name="bringCar"
+                    class="form-control"
+                    required
+                  >
+                    <option value="">-- Select / เลือก --</option>
+                    <option value="No">No (ไม่)</option>
+                    <option value="Yes">Yes (ใช่)</option>
+                  </select>
+                </div>
+
+                <!-- Car Plate -->
+                <div class="col-md-6 d-none" id="carPlateBox">
+                  <label for="carPlate" class="form-label">
+                    Car Plate Number
+                    <span class="text-muted">(เลขทะเบียนรถ)</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="carPlate"
+                    name="carPlate"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+            </fieldset>
+
+            <!-- International Only -->
+            <fieldset class="mt-4 d-none" id="internationalSection">
+              <legend class="h5">
+                For International Participants Only
+                (สำหรับผู้เข้าร่วมต่างประเทศ)
+              </legend>
+              <div class="row g-3">
+                <!-- Morning Session -->
+                <div class="col-12">
+                  <label class="form-label">
+                    Will you attend the morning session at the Parliament?
+                    <br />
+                    <span class="text-muted"
+                      >(สะดวกเข้าร่วมงานภาคเช้าที่รัฐสภาหรือไม่)</span
+                    >
+                  </label>
+                  <select
+                    name="attendMorning"
+                    id="attendMorning"
+                    class="form-control"
+                  >
+                    <option value="">-- Select / เลือก --</option>
+                    <option value="Yes">Yes (สะดวกเข้าร่วม)</option>
+                    <option value="No">No (ไม่สะดวกเข้าร่วม)</option>
+                  </select>
+                </div>
+
+                <!-- Evening Session -->
+                <div class="col-12">
+                  <label class="form-label">
+                    Will you attend the evening session at the hotel? <br />
+                    <span class="text-muted"
+                      >(สะดวกเข้าร่วมงานภาคเย็นที่โรงแรมหรือไม่)</span
+                    >
+                  </label>
+                  <select
+                    name="attendEvening"
+                    id="attendEvening"
+                    class="form-control"
+                  >
+                    <option value="">-- Select / เลือก --</option>
+                    <option value="Yes">Yes (สะดวกเข้าร่วม)</option>
+                    <option value="No">No (ไม่สะดวกเข้าร่วม)</option>
+                  </select>
+                </div>
+
+                <!-- Evening Details -->
+                <div class="col-12 d-none" id="eveningDetails">
+                  <div class="row g-3">
+                    <!-- Food -->
+                    <div class="col-md-6">
+                      <label for="foodType" class="form-label">
+                        Meal Preference
+                        <span class="text-muted">(ระบุประเภทอาหาร)</span>
+                      </label>
+                      <select
+                        id="foodType"
+                        name="foodType"
+                        class="form-control"
+                      >
+                        <option value="">-- Select / เลือก --</option>
+                        <option value="Regular">Regular (ปกติ)</option>
+                        <option value="Muslim">Muslim (มุสลิม)</option>
+                        <option value="Vegetarian">
+                          Vegetarian (มังสวิรัติ)
+                        </option>
+                      </select>
+                    </div>
+
+                    <!-- Allergy -->
+                    <div class="col-md-6">
+                      <label for="foodAllergy" class="form-label">
+                        Food Allergy (if any)
+                        <span class="text-muted">(การแพ้อาหาร หากมี)</span>
+                      </label>
+                      <input
+                        type="text"
+                        id="foodAllergy"
+                        name="foodAllergy"
+                        class="form-control"
+                      />
+                    </div>
+
+                    <!-- Spouse -->
+                    <div class="col-12">
+                      <label for="withSpouse" class="form-label">
+                        Will you attend with spouse?
+                        <span class="text-muted"
+                          >(เข้าร่วมพร้อมคู่สมรสหรือไม่)</span
+                        >
+                      </label>
+                      <select
+                        id="withSpouse"
+                        name="withSpouse"
+                        class="form-control"
+                      >
+                        <option value="">-- Select / เลือก --</option>
+                        <option value="No">No (ไม่ใช่)</option>
+                        <option value="Yes">Yes (ใช่)</option>
+                      </select>
+                    </div>
+
+                    <div id="spouseFields" class="d-none">
+                      <div class="col-md-3">
+                        <label for="spousePrefix" class="form-label">
+                          Prefix <span class="text-muted">(คำนำหน้า)</span>
+                        </label>
+                        <input
+                          type="text"
+                          id="spousePrefix"
+                          name="spousePrefix"
+                          class="form-control"
+                        />
+                      </div>
+                      <div class="col-md-3">
+                        <label for="spouseFirst" class="form-label">
+                          First Name <span class="text-muted">(ชื่อ)</span>
+                        </label>
+                        <input
+                          type="text"
+                          id="spouseFirst"
+                          name="spouseFirst"
+                          class="form-control"
+                        />
+                      </div>
+                      <div class="col-md-3">
+                        <label for="spouseLast" class="form-label">
+                          Last Name <span class="text-muted">(นามสกุล)</span>
+                        </label>
+                        <input
+                          type="text"
+                          id="spouseLast"
+                          name="spouseLast"
+                          class="form-control"
+                        />
+                      </div>
+                      <div class="col-md-3">
+                        <label for="spouseFood" class="form-label">
+                          Spouse Meal
+                          <span class="text-muted">(อาหารคู่สมรส)</span>
+                        </label>
+                        <select
+                          id="spouseFood"
+                          name="spouseFood"
+                          class="form-control"
+                        >
+                          <option value="">-- Select / เลือก --</option>
+                          <option value="Regular">Regular (ปกติ)</option>
+                          <option value="Muslim">Muslim (มุสลิม)</option>
+                          <option value="Vegetarian">
+                            Vegetarian (มังสวิรัติ)
+                          </option>
+                        </select>
+                      </div>
+                      <div class="col-12 mt-2">
+                        <label for="spouseAllergy" class="form-label">
+                          Spouse Food Allergy (if any)
+                          <span class="text-muted"
+                            >(การแพ้อาหารคู่สมรส หากมี)</span
+                          >
+                        </label>
+                        <input
+                          type="text"
+                          id="spouseAllergy"
+                          name="spouseAllergy"
+                          class="form-control"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+
+            <!-- PDPA -->
+            <div class="pdpa-box mt-4">
+              <input type="checkbox" id="pdpaConsent" required />
+              <label for="pdpaConsent">
+                I have read and agree with the
+                <a
+                  href="https://kpi.ac.th/wp-content/uploads/2025/09/pdpa.html"
+                  target="_blank"
+                >
+                  PDPA Policy
+                  <span class="text-muted"
+                    >(นโยบายคุ้มครองข้อมูลส่วนบุคคล)</span
+                  >
+                </a>
+              </label>
+            </div>
+
+            <div class="d-flex align-items-center gap-3 mt-4">
+              <button type="submit" class="btn btn-submit">
+                Register & Get QR <br /><span class="text-muted"
+                  >(ลงทะเบียนและรับ QR)</span
+                >
+              </button>
+              <div class="muted-small">
+                or scan at the venue with UID
+                <span class="text-muted">(หรือสแกนหน้างานด้วย UID)</span>
+              </div>
+            </div>
+
+            <!-- Response -->
+            <div
+              id="responseMessage"
+              class="alert mt-3 d-none"
+              role="alert"
+            ></div>
+          </form>
+        </div>
+
+        <!-- Right panel -->
+        <div class="right-panel d-flex flex-column">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <div class="small-key">Status (สถานะ)</div>
+              <div class="small-val" id="statusText">
+                Not Yet Registered (ยังไม่ได้ลงทะเบียน)
+              </div>
+            </div>
+            <div class="text-end">
+              <div class="small-key">UID</div>
+              <div class="small-val" id="uidText">-</div>
+            </div>
+          </div>
+
+          <div class="qr-box" id="qrArea">
+            <canvas id="qrCanvas"></canvas>
+            <div class="muted-small">QR Code จะปรากฏที่นี่หลังลงทะเบียน</div>
+          </div>
+
+          <div class="info-row">
+            <div>
+              <div class="small-key">Email Address</div>
+              <div class="small-val" id="emailText">-</div>
+            </div>
+            <div>
+              <div class="small-key">Telephone</div>
+              <div class="small-val" id="phoneText">-</div>
+            </div>
+          </div>
+
+          <div class="mt-auto">
+            <div class="muted-small">
+              © 2025 King Prajadhipok's Institute. All rights reserved. |
+              Developed by Information Technology Center
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+      // Toggle custom prefix
+      document.getElementById("prefix").addEventListener("change", function () {
+        document
+          .getElementById("customPrefixBox")
+          .classList.toggle("d-none", this.value !== "Other");
+      });
+
+      // Toggle car plate
+      document
+        .getElementById("bringCar")
+        .addEventListener("change", function () {
+          document
+            .getElementById("carPlateBox")
+            .classList.toggle("d-none", this.value !== "Yes");
+        });
+
+      // Show International section
+      document.querySelectorAll("input[name='orgType']").forEach((el) =>
+        el.addEventListener("change", function () {
+          document
+            .getElementById("internationalSection")
+            .classList.toggle("d-none", this.value !== "International");
+        })
+      );
+
+      // Evening details
+      document
+        .getElementById("attendEvening")
+        .addEventListener("change", function () {
+          document
+            .getElementById("eveningDetails")
+            .classList.toggle("d-none", this.value !== "Yes");
+        });
+
+      // Spouse fields
+      document
+        .getElementById("withSpouse")
+        .addEventListener("change", function () {
+          document
+            .getElementById("spouseFields")
+            .classList.toggle("d-none", this.value !== "Yes");
+        });
+    </script>
+  </body>
+</html>
