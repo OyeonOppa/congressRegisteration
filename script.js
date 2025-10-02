@@ -1,155 +1,152 @@
-// --- เปลี่ยนเป็น URL /exec ของคุณ ---
-const scriptURL =
-  "https://script.google.com/macros/s/AKfycbyJoJLTQUx8rkVnkaFvi1Crc58CyR8QwM2dPo4nLtCOWf5XoTRJW4raqfefaqTRoF0ueA/exec";
-  
-
-const form = document.getElementById("registerForm");
-const responseMessage = document.getElementById("responseMessage");
-const qrArea = document.getElementById("qrArea");
-const statusText = document.getElementById("statusText");
-const uidText = document.getElementById("uidText");
-const emailText = document.getElementById("emailText");
-const phoneText = document.getElementById("phoneText");
+// --- script.js ---
 
 document.addEventListener("DOMContentLoaded", () => {
-  const bringCar = document.getElementById("bringCar");
-  const carPlateBox = document.getElementById("carPlateBox");
-  const attendAfternoon = document.getElementById("attendAfternoon");
-  const seminarRooms = document.getElementById("seminarRooms");
+  const form = document.getElementById("registerForm");
+  const responseMessage = document.getElementById("responseMessage");
+  const qrArea = document.getElementById("qrArea");
+  const statusText = document.getElementById("statusText");
+  const uidText = document.getElementById("uidText");
+  const emailText = document.getElementById("emailText");
+  const phoneText = document.getElementById("phoneText");
+
   const prefix = document.getElementById("prefix");
   const customPrefixBox = document.getElementById("customPrefixBox");
   const customPrefix = document.getElementById("customPrefix");
 
-  // รถ
-  bringCar.addEventListener("change", () => {
-    carPlateBox.classList.toggle("d-none", bringCar.value !== "Yes");
-  });
+  const bringCar = document.getElementById("bringCar");
+  const carPlateBox = document.getElementById("carPlateBox");
 
-  // ช่วงบ่าย
-  attendAfternoon.addEventListener("change", () => {
-    seminarRooms.classList.toggle("d-none", attendAfternoon.value !== "Yes");
-  });
+  const orgRadios = document.querySelectorAll("input[name='orgType']");
+  const internationalSection = document.getElementById("internationalSection");
 
-  // Prefix อื่น ๆ
-  prefix.addEventListener("change", () => {
-    if (prefix.value === "Other") {
-      customPrefixBox.classList.remove("d-none");
-      customPrefix.setAttribute("required", "required");
-    } else {
-      customPrefixBox.classList.add("d-none");
-      customPrefix.removeAttribute("required");
-    }
-  });
-});
+  const attendEvening = document.getElementById("attendEvening");
+  const eveningDetails = document.getElementById("eveningDetails");
 
-// --- Validation Helper ---
-function validateForm() {
-  const phone = form.phone.value.trim();
-  const attendAfternoon = document.getElementById("attendAfternoon");
+  const withSpouse = document.getElementById("withSpouse");
+  const spouseFields = document.getElementById("spouseFields");
 
-  // เบอร์โทร 9–10 หลัก
-  if (!/^[0-9]{9,10}$/.test(phone)) {
-    responseMessage.innerHTML = `<div class="alert alert-warning p-2">⚠️ กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง (9–10 หลัก)</div>`;
-    return false;
-  }
-
-  // กรณีเลือก Yes ต้องเลือกห้องสัมมนาอย่างน้อย 1
-  if (
-    attendAfternoon.value === "Yes" &&
-    !form.querySelectorAll("input[name='seminarRooms[]']:checked").length
-  ) {
-    responseMessage.innerHTML = `<div class="alert alert-warning p-2">⚠️ กรุณาเลือกห้องสัมมนาอย่างน้อย 1 ห้อง</div>`;
-    return false;
-  }
-
-  return true;
-}
-
-// Submit
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  if (!validateForm()) return;
-
-  const submitBtn = form.querySelector("button[type='submit']");
-  submitBtn.disabled = true;
-
-  responseMessage.innerHTML = `<div class="alert alert-info p-2"><div class="spinner-border spinner-border-sm me-2"></div>กำลังลงทะเบียน... กรุณารอสักครู่</div>`;
-  qrArea.innerHTML = `<div class="muted-small">กำลังสร้าง QR Code…</div>`;
-  statusText.textContent = "Processing...";
-  uidText.textContent = "-";
-
-  const fd = new FormData(form);
-
-  // ดึง checkbox ทั้งหมดที่เลือก
-  const checkedRooms = Array.from(
-    document.querySelectorAll("input[name='seminarRooms[]']:checked")
-  ).map(input => input.value);
-
-  // ลบค่าเดิมออก
-  fd.delete("seminarRooms[]");
-
-  // ใส่ทุกค่าที่เลือกกลับเข้า FormData
-  checkedRooms.forEach(room => fd.append("seminarRooms[]", room));
-  // -----------------
-
-  try {
-    const res = await fetch(scriptURL, { method: "POST", body: fd });
-    let data;
-    const ct = res.headers.get("content-type") || "";
-
-    if (ct.includes("application/json")) {
-      data = await res.json();
-    } else {
-      const text = await res.text();
-      try {
-        data = JSON.parse(text);
-      } catch {
-        data = {
-          success:
-            text === "Success" || text.toLowerCase().includes("success"),
-          raw: text,
-        };
-      }
-    }
-
-    console.log("Response:", data);
-
-    if (data.success) {
-      responseMessage.innerHTML = `<div class="alert alert-success p-2">✅ ลงทะเบียนเรียบร้อย ขอบคุณที่เข้าร่วมงาน</div>`;
-      statusText.textContent = "Registered";
-      uidText.textContent = data.uid || "-";
-      emailText.textContent = form.email.value || "-";
-      phoneText.textContent = form.phone.value || "-";
-
-      const qrUrl =
-        data.qrUrl ||
-        (data.qr &&
-          (data.qr.startsWith("http")
-            ? data.qr
-            : "https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=" +
-              encodeURIComponent(data.qr)));
-      if (qrUrl) {
-        qrArea.innerHTML = `<img src="${qrUrl}" alt="QR Code" style="width:200px;height:200px;border-radius:8px;">`;
+  // Toggle custom prefix
+  if (prefix) {
+    prefix.addEventListener("change", () => {
+      if (prefix.value === "Other") {
+        customPrefixBox.classList.remove("d-none");
+        customPrefix.setAttribute("required", "required");
       } else {
-        qrArea.innerHTML = `<div class="muted-small">ไม่พบ QR</div>`;
+        customPrefixBox.classList.add("d-none");
+        customPrefix.removeAttribute("required");
+      }
+    });
+  }
+
+  // Toggle car plate
+  if (bringCar) {
+    bringCar.addEventListener("change", () => {
+      carPlateBox.classList.toggle("d-none", bringCar.value !== "Yes");
+    });
+  }
+
+  // Toggle international section
+  if (orgRadios.length && internationalSection) {
+    orgRadios.forEach(el =>
+      el.addEventListener("change", () => {
+        internationalSection.classList.toggle("d-none", el.value !== "International");
+      })
+    );
+  }
+
+  // Evening details
+  if (attendEvening && eveningDetails) {
+    attendEvening.addEventListener("change", () => {
+      eveningDetails.classList.toggle("d-none", attendEvening.value !== "Yes");
+    });
+  }
+
+  // Spouse fields
+  if (withSpouse && spouseFields) {
+    withSpouse.addEventListener("change", () => {
+      spouseFields.classList.toggle("d-none", withSpouse.value !== "Yes");
+    });
+  }
+
+  // --- Validation Helper ---
+  function validateForm() {
+    const phone = form.phone.value.trim();
+
+    if (!/^[0-9]{9,10}$/.test(phone)) {
+      responseMessage.innerHTML = `<div class="alert alert-warning p-2">⚠️ กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง (9–10 หลัก)</div>`;
+      return false;
+    }
+
+    return true;
+  }
+
+  // --- Submit Form ---
+  const scriptURL = "https://script.google.com/macros/s/AKfycbyJoJLTQUx8rkVnkaFvi1Crc58CyR8QwM2dPo4nLtCOWf5XoTRJW4raqfefaqTRoF0ueA/exec";
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    if (!validateForm()) return;
+
+    const submitBtn = form.querySelector("button[type='submit']");
+    submitBtn.disabled = true;
+
+    responseMessage.innerHTML = `<div class="alert alert-info p-2"><div class="spinner-border spinner-border-sm me-2"></div>กำลังลงทะเบียน... กรุณารอสักครู่</div>`;
+    qrArea.innerHTML = `<div class="muted-small">กำลังสร้าง QR Code…</div>`;
+    statusText.textContent = "Processing...";
+    uidText.textContent = "-";
+
+    const fd = new FormData(form);
+
+    try {
+      const res = await fetch(scriptURL, { method: "POST", body: fd });
+      let data;
+      const ct = res.headers.get("content-type") || "";
+
+      if (ct.includes("application/json")) {
+        data = await res.json();
+      } else {
+        const text = await res.text();
+        try {
+          data = JSON.parse(text);
+        } catch {
+          data = { success: text.toLowerCase().includes("success"), raw: text };
+        }
       }
 
-      form.reset();
-      document.getElementById("carPlateBox").classList.add("d-none");
-      document.getElementById("seminarRooms").classList.add("d-none");
-      document.getElementById("customPrefixBox").classList.add("d-none");
-    } else {
-      responseMessage.innerHTML = `<div class="alert alert-danger p-2">❌ ระบบไม่สามารถลงทะเบียนได้ กรุณาลองใหม่อีกครั้ง หรือติดต่อผู้จัดงาน</div>`;
-      statusText.textContent = "เกิดข้อผิดพลาด";
-      qrArea.innerHTML = `<div class="muted-small">ไม่สามารถสร้าง QR</div>`;
+      console.log("Response:", data);
+
+      if (data.success) {
+        responseMessage.innerHTML = `<div class="alert alert-success p-2">✅ ลงทะเบียนเรียบร้อย ขอบคุณที่เข้าร่วมงาน</div>`;
+        statusText.textContent = "Registered";
+        uidText.textContent = data.uid || "-";
+        emailText.textContent = form.email.value || "-";
+        phoneText.textContent = form.phone.value || "-";
+
+        const qrUrl = data.qrUrl || (data.qr ? "https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=" + encodeURIComponent(data.qr) : null);
+        if (qrUrl) {
+          qrArea.innerHTML = `<img src="${qrUrl}" alt="QR Code" style="width:200px;height:200px;border-radius:8px;">`;
+        } else {
+          qrArea.innerHTML = `<div class="muted-small">ไม่พบ QR</div>`;
+        }
+
+        form.reset();
+        carPlateBox.classList.add("d-none");
+        customPrefixBox.classList.add("d-none");
+        if (eveningDetails) eveningDetails.classList.add("d-none");
+        if (spouseFields) spouseFields.classList.add("d-none");
+      } else {
+        responseMessage.innerHTML = `<div class="alert alert-danger p-2">❌ ระบบไม่สามารถลงทะเบียนได้ กรุณาลองใหม่อีกครั้ง หรือติดต่อผู้จัดงาน</div>`;
+        statusText.textContent = "เกิดข้อผิดพลาด";
+        qrArea.innerHTML = `<div class="muted-small">ไม่สามารถสร้าง QR</div>`;
+      }
+    } catch (err) {
+      console.error(err);
+      responseMessage.innerHTML = `<div class="alert alert-danger p-2">❌ ข้อผิดพลาดเครือข่าย: ${err.message}</div>`;
+      statusText.textContent = "ข้อผิดพลาดเครือข่าย";
+      qrArea.innerHTML = `<div class="muted-small">ไม่สามารถเชื่อมต่อ</div>`;
+    } finally {
+      submitBtn.disabled = false;
     }
-  } catch (err) {
-    console.error(err);
-    responseMessage.innerHTML = `<div class="alert alert-danger p-2">❌ ข้อผิดพลาดเครือข่าย: ${err.message}</div>`;
-    statusText.textContent = "ข้อผิดพลาดเครือข่าย";
-    qrArea.innerHTML = `<div class="muted-small">ไม่สามารถเชื่อมต่อ</div>`;
-  } finally {
-    submitBtn.disabled = false;
-  }
+  });
 });
