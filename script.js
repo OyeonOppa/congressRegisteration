@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // --- Submit Form ---
-  const scriptURL = "https://script.google.com/macros/s/AKfycbyJoJLTQUx8rkVnkaFvi1Crc58CyR8QwM2dPo4nLtCOWf5XoTRJW4raqfefaqTRoF0ueA/exec";
+  const scriptURL = "https://script.google.com/macros/s/AKfycbxTb5Qiba2-9zERJ58yug1w64bwk8fj2EFaXq0m9r-v-nPrxCnLVbuwFWS2jzT4BUvsnQ/exec";
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -91,8 +91,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const submitBtn = form.querySelector("button[type='submit']");
     submitBtn.disabled = true;
 
-    responseMessage.innerHTML = `<div class="alert alert-info p-2"><div class="spinner-border spinner-border-sm me-2"></div>กำลังลงทะเบียน... กรุณารอสักครู่</div>`;
-    qrArea.innerHTML = `<div class="muted-small">กำลังสร้าง QR Code…</div>`;
+    responseMessage.innerHTML = `<div class="alert alert-info p-2"><div class="spinner-border spinner-border-sm me-2"></div>Registering... Please wait.</div>`;
+    qrArea.innerHTML = `<div class="muted-small">Generating QR Code…</div>`;
     statusText.textContent = "Processing...";
     uidText.textContent = "-";
 
